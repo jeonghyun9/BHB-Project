@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BookMarkMapper">
+
+  	<select id="bookMarkList" parameterType="string" resultType="BookMarkDTO">
+	 select num,gCode,deposit,gPrice_MP,gPrice_YP,room,gImage1,phone1,phone2,phone3,userName,userid,address,location,nickname
+	 from bookmark
+	 where userid=#{userid}
+	</select>
+	
+	<insert id="bookMarkAdd" parameterType="BookMarkDTO">
+		insert into bookmark (num,gCode,deposit,gPrice_MP,gPrice_YP,room
+		,gImage1,phone1,phone2,phone3,userName,userid,location,address,nickname)
+		values( ${num}, #{gCode},#{deposit},#{gPrice_MP},
+		        #{gPrice_YP},#{room},#{gImage1},#{phone1},#{phone2},#{phone3},#{userName},#{userid},#{location},#{address},#{nickname} )
+	</insert>
+	
+	<delete id="bookMarkDel" parameterType="int">
+		delete from bookmark
+		where num=#{num}
+	</delete>
+	
+</mapper>

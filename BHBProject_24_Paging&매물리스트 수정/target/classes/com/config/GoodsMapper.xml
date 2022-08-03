@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GoodsMapper">
+	
+	<!-- GoodsYP SQL -->
+	
+	<!-- <select id="goodsList" resultType="Goods_YP_DTO" parameterType="string">
+	select * from goods_yp where room=#{room}
+	</select>
+	
+	<select id="goodsListYP" resultType="Goods_YP_DTO">
+	select * from goods_yp
+	</select>
+	
+	<select id="goodsList_Loc" resultType="Goods_YP_DTO" parameterType="string">
+	select * from goods_yp where address like '%'||#{location}||'%'
+	</select>
+	
+	<insert id="goodsYPAdd" parameterType="Goods_YP_DTO">
+	insert into goods_yp(gcode,gprice_yp,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5)
+	values( #{gCode},#{gPrice_YP},#{address},
+	#{location},#{area},#{room},#{fee},#{floor},#{elv},
+	#{parking},#{build},#{gImage1},#{lessorid},#{gImage2},#{gImage3},#{gImage4},#{gImage5})
+	</insert>
+	
+	<select id="goodsYPCount" resultType="int">
+	select count(*)
+	from goods_yp
+	</select>
+	
+	<select id="goodsRetrieveYP" resultType="Goods_YP_DTO" parameterType="string">
+	select * from goods_yp
+	where gcode=#{gCode}
+	</select> -->
+	
+	
+	
+	<!-- GoodsMP Sql -->
+	
+	
+	<!-- <select id="goodsList" resultType="Goods_MP_DTO" parameterType="string">
+	select * from goods_mp where room=#{room}
+	</select>
+	
+	<select id="goodsListMP" resultType="Goods_MP_DTO">
+	select * from goods_mp
+	</select>
+	
+	<select id="goodsListMP_Loc" resultType="Goods_MP_DTO" parameterType="string">
+	select * from goods_mp where address like '%'||#{location}||'%'
+	</select>
+	
+	<insert id="goodsMPAdd" parameterType="Goods_MP_DTO">
+	insert into goods_mp(gcode,deposit,gprice_mp,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5)
+	values( #{gCode},#{deposit},#{gPrice_MP},#{address},
+	#{location},#{area},#{room},#{fee},#{floor},#{elv},
+	#{parking},#{build},#{gImage1},#{lessorid},#{gImage2},#{gImage3},#{gImage4},#{gImage5})
+	</insert>
+	
+	<select id="goodsMPCount" resultType="int">
+	select count(*)
+	from goods_mp
+	</select>
+	
+	<select id="goodsRetrieveMP" resultType="Goods_MP_DTO" parameterType="string">
+	select * from goods_mp
+	where gCode=#{gCode}
+	</select> -->
+	
+	<!-- 매물리스트 Sql -->
+	
+	<!-- 지역별 검색 -->
+	<select id="goodsList_Loc" resultType="Goods_DTO" parameterType="string">
+	select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from (
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_mp
+    Union all
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_yp
+    ) where address like '%'||#{location}||'%'
+	</select>
+	
+	<!-- 원/투룸 리스트 -->
+	<select id="goodsList" resultType="Goods_DTO" parameterType="string">
+	select rownum rn ,gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from (
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_mp
+    Union all
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_yp
+    ) where room=#{room}
+	</select>
+	
+	
+	<!-- 전세 리스트 -->
+	<select id="goodsListYP" resultType="Goods_DTO">
+	select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from (
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_mp
+    Union all
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_yp
+    ) WHERE deposit IS NULL
+	</select>
+	
+	
+	<!-- 월세 리스트 -->
+	<select id="goodsListMP" resultType="Goods_DTO">
+	select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from (
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_mp
+    Union all
+    select gcode,deposit,gprice,address,location,
+	area,room,fee,floor,elv,parking,build,gimage1,lessorid,gimage2,gimage3,gimage4,gimage5 from goods_yp
+    ) WHERE deposit IS not null
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,21 @@
+{
+  "ecmaVersion": 5,
+  "plugins": {
+    "chrome-apps": {
+      
+    },
+    "chrome-extension": {
+      
+    },
+    "browser-extension": {
+      
+    },
+    "jquery-extension": {
+      
+    }
+  },
+  "libs": [
+    "browser",
+    "jquery"
+  ]
+}
